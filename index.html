@@ -1,0 +1,24 @@
+<html>
+<head>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script src='game.js'></script>
+    <script>
+    $(document).ready(function(){
+        //start_game();
+		register_handlers();
+    });
+    </script>
+</head>
+<body>
+
+<fieldset id="game-box" style='width:500px;text-align:center;display:none;'><legend>Game</legend><br/>
+<img id='image1' src='' /><br/><br/>
+VS<br/><br/>
+<img id='image2' src='' /><br/><br/>
+</fieldset>
+
+Email: <input type="text" id="email"></input>
+<input id="play-button" type="button" value="Play"></input>
+
+</body>
+</html>
