@@ -41,7 +41,7 @@
 				<input id="play-button" type="button" value="Play"></input>
 			</div>
 			<div class="center">
-				<p class="contStuff" id="neither"><a href="#">Neither</a></p>
+				<p id="neither"><a href="#">Neither</a></p>
 			</div>
 		</div>
 		
