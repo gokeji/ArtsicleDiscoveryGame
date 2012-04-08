@@ -4,6 +4,7 @@
 
 body{
 min-width:1500px;
+min-height:750px;
 margin:0;
 padding:0;
 border:0;
@@ -26,6 +27,12 @@ border:0;
 display:block;
 list-style:none;
 text-align:center;
+}
+
+::selection {
+background: #A2A4B7;
+color: white;
+text-shadow: none;
 }
 
 /* ===============================================

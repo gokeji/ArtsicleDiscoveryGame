@@ -4,10 +4,13 @@
 
 body{
 min-width:1500px;
+min-height:750px;
 margin:0;
 padding:0;
 border:0;
 font-family:'Arvo',serif;
+height:750px;
+background:url(./images/2.png) 0 0;
 }
 
 h1,h2,h3,h4,h5,h6,p {
@@ -128,8 +131,7 @@ background-position: 300px -60px;
 ==================================================*/
 
 #page-content {
-height:750px;
-background:url(./images/2.png) 0 0;
+
 }
 
 .contStuff {
