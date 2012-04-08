@@ -28,6 +28,12 @@ list-style:none;
 text-align:center;
 }
 
+::selection {
+background: #A2A4B7;
+color: white;
+text-shadow: none;
+}
+
 /* ===============================================
 ===================== NAV BAR ====================
 ==================================================*/
@@ -122,6 +128,7 @@ background-position: 300px -60px;
 ==================================================*/
 
 #page-content {
+height:750px;
 background:url(./images/2.png) 0 0;
 }
 
@@ -209,5 +216,6 @@ background:url(./images/play.png) 0 0;
 ==================================================*/
 
 #footer_nav {
+height:100px;
 background:url(./images/3.png) 0 0;
 }
