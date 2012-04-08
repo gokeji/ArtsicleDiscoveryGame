@@ -201,8 +201,10 @@ border:0px;
 background:url(./images/play.png) 0 0;
 }
 
-#play-button:hover{background-position: 0 -35px;}
-#play-button:active{background-position: 0 -35px;}
+#play-button:hover{
+background-position: 0 -35px;
+}
+
 
 /* ===============================================
 ===================== FOOTER =====================
