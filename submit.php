@@ -1,5 +1,4 @@
 <?php
-
 // is cURL installed
 if (!function_exists('curl_init')){
     die('Sorry cURL is not installed!');
@@ -36,8 +35,9 @@ else
     die('No user specified!');
 }
 
-if ($email)
+function submit_result($result)
 {
+    global $api_url;
 	// create a new cURL resource handle
 	$ch = curl_init();
 
@@ -47,7 +47,7 @@ if ($email)
 	curl_setopt($ch, CURLOPT_URL, $url);
 
 	// Set POST parameters
-	$data = array('user' => $user_id, 'comparison' => $comparison_id, 'winner' => $winner);
+	$data = array('user' => $result['user_id'], 'comparison' => $result['comparison'], 'winner' => $result['winner']);
 	curl_setopt($ch, CURLOPT_POST, 1); 
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
 
@@ -65,7 +65,21 @@ if ($email)
 
 	// Close the cURL
 	curl_close($ch);
+    
+    return $result;
+}
 
+if ($email)
+{
+    if (isset($_SESSION['picks']) && is_array($_SESSION['picks']))
+    {
+        foreach ($_SESSION['picks'] as $old_pick)
+        {
+            submit_result(array('user_id' => $user_id, 'comparison' => $old_pick['comparison'], 'winner' => $old_pick['winner']));
+        }
+        $_SESSION['picks'] = 0;
+    }
+    $result = submit_result(array('user_id' => $user_id, 'comparison' => $comparison_id, 'winner' => $winner));
 	echo $result;
 }
 else
@@ -80,17 +94,29 @@ else
 		$_SESSION['picks'] = array();
 		array_push($_SESSION['picks'], $data);
 	}
-	
-	if (count($_SESSION['picks']) >= 5)
+    
+    if (isset($_SESSION['pick-count']))
 	{
-		$warning = array("error" => "email required", "email" => $email);
-		echo json_encode($warning);
+		$_SESSION['pick-count'] += 1;
 	}
 	else
 	{
-		$message = array("response" => "Successful comparison!");
-		echo json_encode($message);
+		$_SESSION['pick-count'] = 1;
 	}
+	
+    $message = array("response" => "success");
+    $message["record"] = json_encode($_SESSION['picks']);
+    if (sizeof($_SESSION['picks']) > 5)
+    {
+        $_SESSION['picks'] = array_slice($_SESSION['picks'], -5, 5);
+    }
+        
+	if (($_SESSION['pick-count'] % 2) == 0)
+	{
+		$message["warn"] = "email";
+	}
+    
+    echo json_encode($message);
 }
 
 ?>

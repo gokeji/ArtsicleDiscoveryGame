@@ -7,7 +7,11 @@ handlers_registered = 0;
 function register_handlers()
 {
 	$("#play-button").click(function(){
-		alert("Clicked!");
+		//alert("Clicked!");
+		start_game();
+	});
+    $("#noreg-play-button").click(function(){
+		//alert("Clicked!");
 		start_game();
 	});
 }
@@ -23,6 +27,8 @@ function new_comparison()
         //$('.result').html(data);
         //alert(data);        
         var result = JSON.parse(data);
+        $('#comparison-box').fadeIn("fast");
+        $('#better').fadeIn("fast");
         $('#image1').attr("src", result['art1']['image']).fadeIn("slow");
         $('#image2').attr("src", result['art2']['image']).fadeIn("slow");
         $('#game-box').css("display", "block");
@@ -51,14 +57,18 @@ function submit_selection(comparison_id, winner)
         try
         {
             var result = JSON.parse(data);
-            if (result['response'] == "Successful comparison!")
+            if (result['warn'] == "email")
             {
-                alert("Successful comparison!");
-                new_comparison();
+                if (confirm("Would you like to register with your email?\n"+
+                        "It will take only a second and we will be able to save your results!"))
+                {
+                    $("#email").focus();
+                }
             }
-            else
+            if (result['response'].match(/success/i))
             {
-                alert("Unknown response!\n"+data);
+                //alert("Successful comparison!");
+                new_comparison();
             }
         }
         catch (error)

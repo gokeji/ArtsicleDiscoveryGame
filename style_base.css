@@ -3,7 +3,7 @@
 ==================================================*/
 
 body{
-min-width:1500px;
+min-width:960px;
 min-height:750px;
 margin:0;
 padding:0;
@@ -29,6 +29,51 @@ border:0;
 display:block;
 list-style:none;
 text-align:center;
+}
+
+#page-content {
+width: 960px;
+margin: auto;
+}
+
+#comparison-box {
+display: none;
+position: relative;
+}
+
+#comparison-box > div {
+float: left;
+}
+
+#comparison-box > div.image-box {
+box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
+background: white;
+padding: 5px;
+padding-bottom: 35px;
+top: 10px;
+width: 300px;
+min-width: 300px;
+}
+
+#image1 {
+left: 10px;
+width: 300px;
+min-width: 300px;
+}
+
+#image2 {
+right: 10px;
+width: 300px;
+min-width: 300px;
+}
+
+#neither {
+margin: 135px 135px;
+}
+
+#email-box {
+margin: 20px 0;
+clear: both;
 }
 
 ::selection {
@@ -148,7 +193,7 @@ text-indent:-9999px;
 }
 
 #better {
-display:block;
+display:none;
 width:710px;
 height:70px;
 overflow:hidden;
