@@ -4,9 +4,13 @@
 
 body{
 min-width:1500px;
+min-height:750px;
 margin:0;
 padding:0;
 border:0;
+font-family:'Arvo',serif;
+height:750px;
+background:url(./images/2.png) 0 0;
 }
 
 h1,h2,h3,h4,h5,h6,p {
@@ -27,12 +31,18 @@ list-style:none;
 text-align:center;
 }
 
+::selection {
+background: #A2A4B7;
+color: white;
+text-shadow: none;
+}
+
 /* ===============================================
 ===================== NAV BAR ====================
 ==================================================*/
 
 #header {
-background:url(./images/1.png) 0 0;
+background:url(./images/header.png) 0 0;
 }
 
 #logo {
@@ -43,8 +53,8 @@ display:inline-block;
 display:block;
 overflow:hidden;
 text-indent:-9999px;
-width: 500px;
-height: 250px;
+width: 340px;
+height: 60px;
 background:url(./images/logo.png) 0 0;
 }
 
@@ -53,10 +63,7 @@ background:url(./images/logo.png) 0 0;
 ==================================================*/
 
 #categories {
-display:block;
-padding:0;
-margin:0;
-background:url(./images/1.png) 0 0;
+display:inline-block;
 }
 
 .catBut {
@@ -80,7 +87,7 @@ background:url(./images/catBut.png) 0 0;
 }
 
 #dimension a:hover {
-background-position: 0 -50px;
+background-position: 0 -60px;
 }
 
 #medium {
@@ -92,7 +99,7 @@ background:url(./images/catBut.png) 100px 0;
 }
 
 #medium a:hover {
-background-position: 100px -50px;
+background-position: 100px -60px;
 }
 
 #inspiration {
@@ -104,7 +111,7 @@ background:url(./images/catBut.png) 200px 0;
 }
 
 #inspiration a:hover {
-background-position: 200px -50px;
+background-position: 200px -60px;
 }
 
 #price {
@@ -116,7 +123,7 @@ background:url(./images/catBut.png) 300px 0;
 }
 
 #price a:hover {
-background-position: 300px -50px;
+background-position: 300px -60px;
 }
 
 /* ===============================================
@@ -124,7 +131,7 @@ background-position: 300px -50px;
 ==================================================*/
 
 #page-content {
-background:url(./images/2.png) 0 0;
+
 }
 
 .contStuff {
@@ -140,12 +147,21 @@ overflow:hidden;
 text-indent:-9999px;
 }
 
+#better {
+display:block;
+width:710px;
+height:70px;
+overflow:hidden;
+text-indent:-9999px;
+background:url(./images/better.png) no-repeat;
+}
+
 #image1 {
 
 }
 
 #image1 a {
-background:url(./images/image1.png) 0 0;
+
 }
 
 #neither {
@@ -167,13 +183,42 @@ background-position: 0 -35px;
 }
 
 #image2 a {
-background:url(./images/image2.png) 0 0;
+
 }
+
+/* ===============================================
+=================== GAME STUFF ===================
+==================================================*/
+
+#game-box {
+width:500px;
+text-align:center;
+display:none;
+margin: 0px auto;
+}
+
+#email {
+outline-color:#00b3be;
+}
+
+#play-button {
+display:inline-block;
+width:70px;
+height:35px;
+overflow:hidden;
+text-indent:-9999px;
+border:0px;
+background:url(./images/play.png) 0 0;
+}
+
+#play-button:hover{background-position: 0 -35px;}
+#play-button:active{background-position: 0 -35px;}
 
 /* ===============================================
 ===================== FOOTER =====================
 ==================================================*/
 
 #footer_nav {
+height:100px;
 background:url(./images/3.png) 0 0;
 }
