@@ -106,12 +106,12 @@ else
 	
     $message = array("response" => "success");
     $message["record"] = json_encode($_SESSION['picks']);
-    if (sizeof($_SESSION['picks']) > 5)
+    if (sizeof($_SESSION['picks']) > 10)
     {
         $_SESSION['picks'] = array_slice($_SESSION['picks'], -5, 5);
     }
         
-	if (($_SESSION['pick-count'] % 2) == 0)
+	if (($_SESSION['pick-count'] % 5) == 0)
 	{
 		$message["warn"] = "email";
 	}
