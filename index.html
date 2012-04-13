@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
-    <script src='game.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="game.js"></script>
     <script>
     $(document).ready(function(){
         //start_game();
@@ -26,27 +26,42 @@
 			</ul>
 		</div>
 		</header>
+		
+		<div class="center" id="choice">
+			<div class="center" id="better">WHICH DO YOU LIKE BETTER?</div>
+		</div>
 	
-		<div id="page-content">
-            <ul class="center" id="better">WHICH DO YOU LIKE BETTER?</ul>
-			<div class="center" id="comparison-box" style="display:none;">
-				<div class="image-box"><img id='image1' src='' /></div>
-				<div class="contStuff" id="neither"><a href="#">Neither</a></div>
-				<div class="image-box"><img id='image2' src='' /></div>
-			</div>
-			<div class="center" id="email-box">
-                <p>Would you like to register with your email?</p>
-				Email: <input type="text" id="email"></input>
-				<input id="play-button" type="button" value="Resgister & Play"></input>
+		<div class="center" id="page">
+			<div class="center" id="page-content">
+				<div class="center" id="comparison-box" style="display:none;">
+					<div class="image-box"><img id="image1" src="" /></div>
+					<div class="contStuff" id="neither"><a href="#">Neither</a></div>
+					<div class="image-box"><img id="image2" src="" /></div>
+				</div>
+				<div class="center" id="email-box">
+					<p>Would you like to register with your email?</p>
+					Email: <input type="text" id="email"></input>
+					<input id="play-button" type="button" value="Resgister & Play"></input>
+				</div>
 			</div>
 		</div>
-		<div id="preload">
-            <img id="pre-image1" src=""/>
-            <img id="pre-image2" src=""/>
-        </div>
+		
+		<div class="center" id="preload">
+			<img id="pre-image1" src=""/>
+			<img id="pre-image2" src=""/>
+		</div>
+		
 		<footer>
 			<div class="center" id="footer_nav">
-			
+				<div class="center" id="left-footer">
+					<img id="left-logo" />
+					<div class="footer-text"><p><b>Questions?</b> Call us at (646) 470-4219!</p></div>
+				</div>
+				<div class="center" id="right-footer">
+					<a href="https://www.facebook.com/Artsicle" id="facebook">Facebook!</a>
+					<a href="http://twitter.com/#!/artsicle/" id="twitter">Twitter!</a>
+					<div class="footer-text"><p>Follow Us!</p></div>
+				</div>
 			</div>
 		</footer>
 		

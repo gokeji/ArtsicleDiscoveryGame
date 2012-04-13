@@ -10,7 +10,7 @@ padding:0;
 border:0;
 font-family:'Arvo',serif;
 height:750px;
-background:url(./images/2.png) 0 0;
+background:url(./images/3.png) 0 0;
 }
 
 h1,h2,h3,h4,h5,h6,p {
@@ -34,46 +34,6 @@ text-align:center;
 #page-content {
 width: 960px;
 margin: auto;
-}
-
-#comparison-box {
-display: none;
-position: relative;
-}
-
-#comparison-box > div {
-float: left;
-}
-
-#comparison-box > div.image-box {
-box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
-background: white;
-padding: 5px;
-padding-bottom: 35px;
-top: 10px;
-width: 300px;
-min-width: 300px;
-}
-
-#image1 {
-left: 10px;
-width: 300px;
-min-width: 300px;
-}
-
-#image2 {
-right: 10px;
-width: 300px;
-min-width: 300px;
-}
-
-#neither {
-margin: 135px 135px;
-}
-
-#email-box {
-margin: 20px 0;
-clear: both;
 }
 
 ::selection {
@@ -172,11 +132,33 @@ background-position: 300px -60px;
 }
 
 /* ===============================================
+===================== CHOICE =====================
+==================================================*/
+
+#choice {
+background:url(./images/1.png) 0 0;
+}
+
+#better {
+display:none;
+width:710px;
+height:100px;
+overflow:hidden;
+text-indent:-9999px;
+background:url(./images/better.png) no-repeat;
+}
+
+/* ===============================================
 ================= TOP CONTAINER ==================
 ==================================================*/
 
-#page-content {
+#page {
+width:auto;
+background:url(./images/2.png) 0 0;
+}
 
+#page-content {
+padding:20px;
 }
 
 .contStuff {
@@ -192,25 +174,39 @@ overflow:hidden;
 text-indent:-9999px;
 }
 
-#better {
-display:none;
-width:710px;
-height:70px;
-overflow:hidden;
-text-indent:-9999px;
-background:url(./images/better.png) no-repeat;
+/* ===============================================
+=================== GAME STUFF ===================
+==================================================*/
+
+#comparison-box {
+display: none;
+width:auto;
+height:auto;
+position: relative;
+}
+
+#comparison-box > div {
+float: left;
+}
+
+#comparison-box > div.image-box {
+box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
+background: white;
+padding: 5px;
+padding-bottom: 35px;
+top: 10px;
+width: 300px;
+min-width: 300px;
 }
 
 #image1 {
-
-}
-
-#image1 a {
-
+left: 10px;
+width: 300px;
+min-width: 300px;
 }
 
 #neither {
-
+margin: 135px 135px;
 }
 
 #neither a {
@@ -224,16 +220,15 @@ background-position: 0 -35px;
 }
 
 #image2 {
-
+right: 10px;
+width: 300px;
+min-width: 300px;
 }
 
-#image2 a {
-
+#comparison-box {
+height:auto;
+width:auto;
 }
-
-/* ===============================================
-=================== GAME STUFF ===================
-==================================================*/
 
 #game-box {
 width:500px;
@@ -243,6 +238,12 @@ display:none;
 
 #email {
 outline-color:#00b3be;
+}
+
+
+#email-box {
+padding: 20px;
+clear: both;
 }
 
 #play-button {
@@ -264,7 +265,48 @@ background:url(./images/play.png) 0 0;
 
 #footer_nav {
 height:100px;
-background:url(./images/3.png) 0 0;
+}
+
+.footer-text {
+display:block;
+}
+
+#left-footer {
+display:inline-block;
+width:350px;
+height:100px;
+}
+
+#right-footer {
+display:inline-block;
+width:350px;
+height:100px;
+}
+
+#left-logo {
+width:54px;
+height:38px;
+overflow:hidden;
+text-indent:-9999px;
+background:url(./images/logo_icon.png) 0 0;
+}
+
+#twitter {
+display:inline-block;
+width:23px;
+height:24px;
+overflow:hidden;
+text-indent:-9999px;
+background:url(./images/twitter.png) 0 0;
+}
+
+#facebook {
+display:inline-block;
+width:24px;
+height:23px;
+overflow:hidden;
+text-indent:-9999px;
+background:url(./images/facebook.png) 0 0;
 }
 
 #pre-image1, #pre-image2{
