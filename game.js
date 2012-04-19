@@ -7,6 +7,18 @@ handlers_registered = 0;
 pre_loaded = false;
 next_load = 0;
 
+like_url_template = "//www.facebook.com/plugins/like.php?"+
+                    "appId=411664055513252&"+
+                    "href={{IMAGE-URL}}&"+
+                    "send=false&"+
+                    "layout=button_count&"+
+                    "width=90&"+
+                    "height=21&"+
+                    "show_faces=false&"+
+                    "action=like&"+
+                    "colorscheme=light&"+
+                    "font=lucida+grande";
+
 function preload_images(src1, src2)
 {
     $("#pre-image1").attr("src", src1);
@@ -46,7 +58,11 @@ function comp_back(data) {
         $('#comparison-box').fadeIn("fast");
         $('#better').fadeIn("fast");
         $('#image1').attr("src", first_load['art1']['image']);//.fadeIn("fast");
+        $('#image1').attr("permalink", first_load['art1']['permalink']);
+        $('#like-image1').attr("src", like_url_template.replace("{{IMAGE-URL}}", first_load['art1']['image']));
         $('#image2').attr("src", first_load['art2']['image']);//.fadeIn("fast");
+        $('#image2').attr("permalink", first_load['art2']['permalink']);
+        $('#like-image2').attr("src", like_url_template.replace("{{IMAGE-URL}}", first_load['art2']['image']));
         $('#game-box').css("display", "block");
         
         comparison_id = first_load['id'];

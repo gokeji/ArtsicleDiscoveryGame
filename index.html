@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Artsicle Discovery Game</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="game.js"></script>
     <script>
@@ -34,9 +35,23 @@
 		<div class="center" id="page">
 			<div class="center" id="page-content">
 				<div class="center" id="comparison-box" style="display:none;">
-					<div class="image-box"><img id="image1" src="" /></div>
-					<div class="contStuff" id="neither"><a href="#">Neither</a></div>
-					<div class="image-box"><img id="image2" src="" /></div>
+					<div class="image-box">
+                        <img id="image1" src="" />
+                        <div>
+                            <button id="post-image1-button" onclick='postToFeed("#image1"); return false;'>Post to Feed</button>
+                            <!-- <iframe id="like-image1" src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;" allowTransparency="true"></iframe> -->
+                        </div>
+                    </div>
+					<div class="contStuff" id="neither">
+                        <a href="#">Neither</a>
+                    </div>
+					<div class="image-box">
+                        <img id="image2" src="" />
+                        <div>
+                            <button id="post-image2-button" onclick='postToFeed("#image2"); return false;'>Post to Feed</button>
+                            <!-- <iframe id="like-image2" src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;" allowTransparency="true"></iframe> -->
+                        </div>
+                    </div>
 				</div>
 				<div class="center" id="email-box">
 					<p>Would you like to register with your email?</p>
@@ -64,7 +79,31 @@
 				</div>
 			</div>
 		</footer>
-		
-	</body>
+		<div id='fb-root'></div>
+        <script src='http://connect.facebook.net/en_US/all.js'></script>
+        <script> 
+          FB.init({appId: "411664055513252", status: true, cookie: true});
 
+          function postToFeed(image) {
+
+            // calling the API ...
+            var obj = {
+              method: 'feed',
+              redirect_uri: 'http://www.artsicle.com/',
+              link: 'http://www.artsicle.com/art/' + $(image).attr("permalink"),
+              picture: $(image).attr("src"),
+              name: 'Artsicle Discovery Game',
+              caption: 'Caption, My Caption!',
+              description: 'This is the coolest artwork like EVER!'
+            };
+
+            function callback(response) {
+              alert("Post ID: " + response['post_id']);
+            }
+
+            FB.ui(obj, callback);
+          }
+
+        </script>
+	</body>
 </html>
