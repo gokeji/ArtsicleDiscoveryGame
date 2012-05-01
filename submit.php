@@ -116,6 +116,8 @@ else
 		$message["warn"] = "email";
 	}
     
+    $message["saved-to"] = "session";
+    
     echo json_encode($message);
 }
 

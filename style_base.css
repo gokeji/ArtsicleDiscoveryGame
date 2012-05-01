@@ -52,6 +52,7 @@ background:url(./images/header.png) 0 0;
 
 #logo {
 display:inline-block;
+padding:0;
 }
 
 #logo a{
@@ -59,76 +60,9 @@ display:block;
 overflow:hidden;
 text-indent:-9999px;
 width: 340px;
+cursor:default;
 height: 60px;
 background:url(./images/logo.png) 0 0;
-}
-
-/* ===============================================
-=================== CATEGORIES ===================
-==================================================*/
-
-#categories {
-display:inline-block;
-}
-
-.catBut {
-display:inline-block;
-}
-
-.catBut a {
-display:block;
-width:100px;
-height:50px;
-overflow:hidden;
-text-indent:-9999px;
-}
-
-#dimension {
-
-}
-
-#dimension a {
-background:url(./images/catBut.png) 0 0;
-}
-
-#dimension a:hover {
-background-position: 0 -60px;
-}
-
-#medium {
-
-}
-
-#medium a {
-background:url(./images/catBut.png) 100px 0;
-}
-
-#medium a:hover {
-background-position: 100px -60px;
-}
-
-#inspiration {
-
-}
-
-#inspiration a {
-background:url(./images/catBut.png) 200px 0;
-}
-
-#inspiration a:hover {
-background-position: 200px -60px;
-}
-
-#price {
-
-}
-
-#price a {
-background:url(./images/catBut.png) 300px 0;
-}
-
-#price a:hover {
-background-position: 300px -60px;
 }
 
 /* ===============================================
@@ -191,13 +125,17 @@ float: left;
 
 #comparison-box > div.image-box {
 box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
-background: white;
+opacity:.85;
+background: #dfdfdf;
 padding: 5px;
 top: 10px;
 width: 300px;
 min-width: 300px;
 }
 
+#comparison-box > div.image-box:hover {
+opacity:1;
+}
 #image1 {
 left: 10px;
 width: 300px;
@@ -247,6 +185,7 @@ clear: both;
 
 #play-button {
 display:inline-block;
+cursor:pointer;
 width:70px;
 height:35px;
 overflow:hidden;
@@ -258,6 +197,18 @@ background:url(./images/play.png) 0 0;
 #play-button:hover{background-position: 0 -35px;}
 #play-button:active{background-position: 0 -35px;}
 
+.share-button {
+cursor:pointer;
+width:70px;
+height:35px;
+overflow:hidden;
+text-indent:-9999px;
+border:0px;
+background:url(./images/share.png) 0 0;
+}
+
+.share-button:hover{background-position: 0 -35px;}
+.share-button:active{background-position: 0 -35px;}
 /* ===============================================
 ===================== FOOTER =====================
 ==================================================*/
@@ -283,11 +234,16 @@ height:100px;
 }
 
 #left-logo {
+display:inline-block;
 width:54px;
 height:38px;
 overflow:hidden;
 text-indent:-9999px;
 background:url(./images/logo_icon.png) 0 0;
+}
+
+#left-logo:hover {
+background-position: 0 -38px;
 }
 
 #twitter {
@@ -299,6 +255,9 @@ text-indent:-9999px;
 background:url(./images/twitter.png) 0 0;
 }
 
+#twitter:hover {
+background-position: 0 -24px;
+}
 #facebook {
 display:inline-block;
 width:24px;
@@ -308,6 +267,9 @@ text-indent:-9999px;
 background:url(./images/facebook.png) 0 0;
 }
 
+#facebook:hover {
+background-position: 0 -23px;
+}
 #pre-image1, #pre-image2{
 width:1px;
 height:1px;

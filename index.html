@@ -1,17 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>Artsicle Discovery Game</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="game.js"></script>
-    <script>
-    $(document).ready(function(){
-        //start_game();
-		register_handlers();
-    });
-    </script>
     <link rel="stylesheet" href="style_base.css" type="text/css" />
+    <link href="./cloud-zoom/cloud-zoom.css" rel="stylesheet" type="text/css" />
 </head>
 
 	<body>
@@ -19,12 +12,7 @@
 		<header>
 		<div class="center" id="header">
 			<ul id="logo"><a href="#">Discovery Game</a></ul>
-			<ul id="categories">
-				<p class="catBut" id="dimension"><a href="#">Dimension</a></p>
-				<p class="catBut" id="medium"><a href="#">Medium</a></p>
-				<p class="catBut" id="inspiration"><a href="#">Inspiration</a></p>
-				<p class="catBut" id="price"><a href="#">Price</a></p>
-			</ul>
+            <!-- <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.artsicle.com&send=false&layout=button_count&width=450&show_faces=true&action=like&colorscheme=light&font=verdana&height=21&appId=411664055513252" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe> -->
 		</div>
 		</header>
 		
@@ -34,29 +22,39 @@
 	
 		<div class="center" id="page">
 			<div class="center" id="page-content">
+                <img id="loading-animation" src="./images/loading.gif" style="display:none;"/>
 				<div class="center" id="comparison-box" style="display:none;">
 					<div class="image-box">
-                        <img id="image1" src="" />
+						<a href="" class="cloud-zoom" id="zoom1" rel="position:'left'">
+                            <img id="image1" src="" />
+                        </a>
                         <div>
-                            <button id="post-image1-button" onclick='postToFeed("#image1"); return false;'>Post to Feed</button>
+                            <button class="share-button" id="post-image1-button" onclick='postToFeed("#image1"); return false;'>Post to Feed</button>
                             <!-- <iframe id="like-image1" src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;" allowTransparency="true"></iframe> -->
                         </div>
                     </div>
 					<div class="contStuff" id="neither">
-                        <a href="#">Neither</a>
+                        <a href="#" id="neither-button">Neither</a>
                     </div>
 					<div class="image-box">
-                        <img id="image2" src="" />
+						<a href="" class="cloud-zoom" id="zoom2" rel="position:'right'">
+                            <img id="image2" src="" />
+                        </a>
                         <div>
-                            <button id="post-image2-button" onclick='postToFeed("#image2"); return false;'>Post to Feed</button>
+                            <button class="share-button" id="post-image2-button" onclick='postToFeed("#image2"); return false;'>Post to Feed</button>
                             <!-- <iframe id="like-image2" src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;" allowTransparency="true"></iframe> -->
                         </div>
                     </div>
 				</div>
 				<div class="center" id="email-box">
-					<p>Would you like to register with your email?</p>
-					Email: <input type="text" id="email"></input>
-					<input id="play-button" type="button" value="Resgister & Play"></input>
+                    <h3 id="login-message">Would you like to login with Facebook for a more personalized experience?</h3>
+                    <div id="login-buttons">
+                        <div class="fb-login-button" scope="email" style="display:inline-block;">Login with Facebook</div>
+                        <button id="play-button">Just play</button>
+                    </div>
+                    <input type="text" id="email" style="display:none;"></input>
+					<!-- <p>Would you like to register with your email?</p>
+					<input id="play-button" type="button" value="Register & Play"></input> -->
 				</div>
 			</div>
 		</div>
@@ -69,7 +67,7 @@
 		<footer>
 			<div class="center" id="footer_nav">
 				<div class="center" id="left-footer">
-					<img id="left-logo" />
+					<a href="https://www.artsicle.com" id="left-logo">Artsicle!</a>
 					<div class="footer-text"><p><b>Questions?</b> Call us at (646) 470-4219!</p></div>
 				</div>
 				<div class="center" id="right-footer">
@@ -80,29 +78,73 @@
 			</div>
 		</footer>
 		<div id='fb-root'></div>
-        <script src='http://connect.facebook.net/en_US/all.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="./cloud-zoom/cloud-zoom.1.0.2.js"></script>
+        <script src="game.js"></script>
+        <script>
+            $(document).ready(function(){
+                //start_game();
+                register_handlers();
+            });
+        </script>
         <script> 
-          FB.init({appId: "411664055513252", status: true, cookie: true});
-
-          function postToFeed(image) {
-
-            // calling the API ...
-            var obj = {
-              method: 'feed',
-              redirect_uri: 'http://www.artsicle.com/',
-              link: 'http://www.artsicle.com/art/' + $(image).attr("permalink"),
-              picture: $(image).attr("src"),
-              name: 'Artsicle Discovery Game',
-              caption: 'Caption, My Caption!',
-              description: 'This is the coolest artwork like EVER!'
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '411664055513252',
+                    channelUrl : '//'+window.location.hostname+'/adg/fb-channel.php',
+                    status     : true, 
+                    cookie     : true,
+                    xfbml      : true,
+                    oauth      : true,
+                });
+                
+                // listen for and handle auth.statusChange events
+                FB.Event.subscribe('auth.statusChange', function(response) {
+                    if (response.authResponse) {
+                        // user has auth'd your app and is logged into Facebook
+                        FB.api('/me', function(me){
+                            if (me.name) {
+                                //alert("hola! " + me.name + "(" + me.email + ")");
+                                $("div.fb-login-button").hide();
+                                $("#login-message").html("Welcome <b class='welcome-name'>" + me.first_name + "</b>!");
+                                $("#email").val(me.email);
+                                $('#auth-loggedout').hide();
+                                $('#auth-loggedin').show();
+                                $("#play-button").hide();
+                                start_game();
+                            }
+                        })
+                    } else {
+                        // user has not auth'd your app, or is not logged into Facebook
+                        $('#auth-loggedout').show();
+                        $('#auth-loggedin').hide();
+                    }
+                });
             };
+            (function(d){
+               var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+               js = d.createElement('script'); js.id = id; js.async = true;
+               js.src = "//connect.facebook.net/en_US/all.js";
+               d.getElementsByTagName('head')[0].appendChild(js);
+            }(document));
 
-            function callback(response) {
-              alert("Post ID: " + response['post_id']);
+            function postToFeed(image) {
+                var obj = {
+                    method: 'feed',
+                    //redirect_uri: 'http://www.artsicle.com/',
+                    link: 'http://www.artsicle.com/art/' + $(image).attr("permalink"),
+                    picture: $(image).attr("src"),
+                    name: 'Artsicle Discovery Game',
+                    caption: 'Caption, My Caption!',
+                    description: 'This is the coolest artwork like EVER!'
+                };
+
+                function callback(response) {
+                    //alert("Post ID: " + response['post_id']);
+                }
+
+                FB.ui(obj, callback);
             }
-
-            FB.ui(obj, callback);
-          }
 
         </script>
 	</body>

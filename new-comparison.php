@@ -10,10 +10,52 @@ $api_url = "http://$api_key:artsicle@www.artsicle.com/api/v1";
 
 $email = isset($_GET['email']) ? trim($_GET['email']) : '';
 
-function new_user() 
+function get_user($email)
+{
+	global $api_url;
+    
+	// create a new cURL resource handle 
+	$ch = curl_init();
+  
+	$url = $api_url."/user/get";
+  
+	// Set URL
+	curl_setopt($ch, CURLOPT_URL, $url);
+	 
+    $data = array('email' => $email);
+    curl_setopt($ch, CURLOPT_POST, 1); 
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
+	
+	// Include header in result
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+ 
+	// Return the data
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 
+	// 10 second timeout
+	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+ 
+	// Fetch resource
+	$output = curl_exec($ch);
+ 
+	// Close the cURL
+	curl_close($ch);
+ 
+	$obj = json_decode($output, true);
+	$user_id = $obj['user'];
+	
+    $_SESSION['email'] = $email;
+
+	if ($user_id)
+        return $user_id;
+    else
+        return $output;
+}
+
+function new_user($email) 
 { 
 	global $api_url;
-	global $email;
+
 	// create a new cURL resource handle 
 	$ch = curl_init();
   
@@ -51,8 +93,10 @@ function new_user()
 	{
 		$_SESSION['email'] = $email;
 	}
-	
-	return $user_id;
+	if ($user_id)
+        return $user_id;
+    else
+        return false;
 }
 
 $user_id = "";
@@ -60,7 +104,12 @@ $user_id = "";
 session_start();
 
 if ($email && !isset($_SESSION['email'])) {
-	$user_id = new_user();
+	$user_id = new_user($email);
+    if(!$user_id)
+    {
+        $user_id = get_user($email);
+    }
+    
     $_SESSION['user'] = $user_id;
 }
 elseif (isset($_SESSION['user']))
@@ -103,7 +152,9 @@ $output = curl_exec($ch);
 // Close the cURL
 curl_close($ch);
 
-echo $output;
-
+if (preg_match("/bad/i", $output))
+    echo json_encode(array("email" => $_SESSION['email'], "user" => $_SESSION['user']));
+else
+    echo $output;
 
 ?>
