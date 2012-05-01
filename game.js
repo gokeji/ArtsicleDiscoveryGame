@@ -71,6 +71,8 @@ function comp_back(data) {
         $('#like-image2').attr("src", like_url_template.replace("{{IMAGE-URL}}", first_load['art2']['image']));
         $('#game-box').css("display", "block");
         
+        $('#comparison-box').css("opacity", "1");
+        
         comparison_id = first_load['id'];
         image1_perm = first_load['art1']['permalink'];
         image2_perm = first_load['art2']['permalink'];
