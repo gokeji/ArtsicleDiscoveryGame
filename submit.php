@@ -1,4 +1,5 @@
 <?php
+
 // is cURL installed
 if (!function_exists('curl_init')){
     die('Sorry cURL is not installed!');

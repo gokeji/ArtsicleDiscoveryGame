@@ -90,7 +90,7 @@ function comp_back(data) {
                 if (!submit_lock)
                 {
                     submit_lock = 1;
-                    submit_selection(comparison_id, image1_perm);
+                    submit_selection(comparison_id, image1_perm, image2_perm);
                 }
             });
             $('#zoom2').click(function(e) {
@@ -98,7 +98,7 @@ function comp_back(data) {
                 if (!submit_lock)
                 {
                     submit_lock = 1;
-                    submit_selection(comparison_id, image2_perm);
+                    submit_selection(comparison_id, image2_perm, image1_perm);
                 }
             });
             $('#neither-button').click(function() {
@@ -126,7 +126,7 @@ function new_comparison()
     $.get(url, comp_back);
 }
 
-function submit_selection(comparison_id, winner)
+function submit_selection(comparison_id, winner, loser)
 {
     new_comparison();
     var url = 'submit.php?comp_id=' + comparison_id + (winner ? '&winner='+winner : '');
@@ -151,6 +151,31 @@ function submit_selection(comparison_id, winner)
         {
             //alert("Invalid response!\n"+data);
         }
+    });
+    
+    //submit stats
+    var url = 'stats.php?comp_id=' + comparison_id + (winner ? '&winner='+winner : '') + (loser ? '&loser='+loser : '');
+    $.get(url, function(data) {
+				try
+	        {
+	            var result = JSON.parse(data);
+	            var obj = {
+	                link: 'http://www.artsicle.com/art/' + result['permalink'],
+	                picture: result['image'],
+	                caption: '"' + result['name'] + '" by ' + result['artist']['full'],
+	                winrate: result['winrate'],
+	                battles: result['battles'],
+	                size: result['size'],
+	                medium: result['medium']
+	            };
+	            
+	            noty({"text":"You voted for "+obj['caption']+".</br>"+obj['winrate']+"% of people agree with you,"+"given "+obj['battles']+" battle(s).","theme":"noty_theme_mitgux", "layout":"bottomRight","type":"information","animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":15000,"closeButton":true,"closeOnSelfClick":false,"closeOnSelfOver":false,"modal":false});
+	        }
+	        catch (error)
+	        {
+	            //alert("Invalid response!\n"+data);
+	            $('#choice').html(data);
+	        }
     });
 }
 

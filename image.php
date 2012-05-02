@@ -19,7 +19,7 @@ if (!$art_perm)
 // create a new cURL resource handle
 $ch = curl_init();
 
-$url = $api_url."/art/$art_perm";
+$url = $api_url."/art/" . $art_perm;
 
 // Set URL
 curl_setopt($ch, CURLOPT_URL, $url);
