@@ -1,10 +1,9 @@
-
 /* This is the moving lens square underneath the mouse pointer. */
 .cloud-zoom-lens {
 	border: 4px solid #888;
 	margin:-4px;	/* Set this to minus the border thickness. */
-	background-color:#fff;	
-	cursor:none;		
+	background-color:#000;
+	cursor:none;
 }
 
 /* This is for the title text. */
@@ -23,7 +22,8 @@
 
 /* This is the zoom window. */
 .cloud-zoom-big {
-	border:2px solid #ccc;
+	border:4px solid #ccc;
+	margin:-5px;
 	overflow:hidden;
 }
 

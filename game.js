@@ -136,7 +136,7 @@ function submit_selection(comparison_id, winner, loser)
             var result = JSON.parse(data);
             if (result['warn'] == "email")
             {
-                noty({"text":"We can save your choices if you login with Facebook",
+                noty({"text":"Login with Facebook to save your choices!",
                       "theme":"noty_theme_mitgux","layout":"topRight","type":"information",
                       "animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},
                       "speed":500,"timeout":5000,"closeButton":true,"closeOnSelfClick":true,
@@ -186,6 +186,9 @@ function start_game()
         game_started = true;
         $('#comparison-box').hide();
         $("#loading-animation").show();
+	$("#play-button").hide();
+	$("#login-message").hide();
+	$("#fblog").hide();
     }
     
     new_comparison();

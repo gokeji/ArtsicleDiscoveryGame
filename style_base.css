@@ -88,6 +88,7 @@ background:url(./images/better.png) no-repeat;
 
 #page {
 width:auto;
+min-height:250px;
 background:url(./images/2.png) 0 0;
 }
 
@@ -125,9 +126,12 @@ float: left;
 
 #comparison-box > div.image-box {
 box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
-opacity:.85;
+opacity:.9;
 background: #dfdfdf;
-padding: 5px;
+padding: 3px;
+border-width:2px;
+border-style:solid;
+border-color:#dfdfdf;
 top: 10px;
 width: 300px;
 min-width: 300px;
@@ -135,7 +139,11 @@ min-width: 300px;
 
 #comparison-box > div.image-box:hover {
 opacity:1;
+border-width:2px;
+border-style:dashed;
+border-color:#000;
 }
+
 #image1 {
 left: 10px;
 width: 300px;
@@ -173,10 +181,18 @@ text-align:center;
 display:none;
 }
 
+/* ===============================================
+===================== FOOTER =====================
+==================================================*/
+
+#login-message {
+display:block;
+margin:25px;
+}
+
 #email {
 outline-color:#00b3be;
 }
-
 
 #email-box {
 padding: 20px;
@@ -209,6 +225,7 @@ background:url(./images/share.png) 0 0;
 
 .share-button:hover{background-position: 0 -35px;}
 .share-button:active{background-position: 0 -35px;}
+
 /* ===============================================
 ===================== FOOTER =====================
 ==================================================*/
