@@ -3,8 +3,10 @@
 
 <head>
     <title>Artsicle Discovery Game</title>
-    <link rel="stylesheet" href="style_base.css" type="text/css" />
-    <link href="./cloud-zoom/cloud-zoom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="./style_base.css"/>
+    <link rel="stylesheet" type="text/css" href="./cloud-zoom/cloud-zoom.css"/>
+    <link rel="stylesheet" type="text/css" href="./noty/css/jquery.noty.css"/>
+    <link rel="stylesheet" type="text/css" href="./noty/css/noty_theme_mitgux.css"/>
 </head>
 
 	<body>
@@ -79,8 +81,9 @@
 		</footer>
 		<div id='fb-root'></div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="./noty/js/jquery.noty.js"></script>
         <script src="./cloud-zoom/cloud-zoom.1.0.2.js"></script>
-        <script src="game.js"></script>
+        <script src="./game.js"></script>
         <script>
             $(document).ready(function(){
                 //start_game();
@@ -111,7 +114,7 @@
                                 $('#auth-loggedout').hide();
                                 $('#auth-loggedin').show();
                                 $("#play-button").hide();
-                                new_comparison();
+                                start_game();
                             }
                         })
                     } else {

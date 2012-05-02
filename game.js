@@ -9,6 +9,8 @@ submit_lock = 0;
 pre_loaded = false;
 next_load = 0;
 
+game_started = false;
+
 like_url_template = "//www.facebook.com/plugins/like.php?"+
                     "appId=411664055513252&"+
                     "href={{IMAGE-URL}}&"+
@@ -134,28 +136,32 @@ function submit_selection(comparison_id, winner)
             var result = JSON.parse(data);
             if (result['warn'] == "email")
             {
-                if (confirm("Would you like to register with your email?\n"+
-                        "It will take only a second and we will be able to save your results!"))
-                {
-                    $("#email").focus();
-                }
+                noty({"text":"We can save your choices if you login with Facebook",
+                      "theme":"noty_theme_mitgux","layout":"topRight","type":"information",
+                      "animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},
+                      "speed":500,"timeout":5000,"closeButton":true,"closeOnSelfClick":true,
+                      "closeOnSelfOver":false,"modal":false});
             }
             if (result['response'].match(/success/i))
             {
                 //alert("Successful comparison!");
-                //submit_lock = 0;
             }
         }
         catch (error)
         {
-            alert("Invalid response!\n"+data);
+            //alert("Invalid response!\n"+data);
         }
     });
 }
 
 function start_game()
 {
-    $('#comparison-box').hide();
-    $("#loading-animation").show();
+    if (!game_started)
+    {
+        game_started = true;
+        $('#comparison-box').hide();
+        $("#loading-animation").show();
+    }
+    
     new_comparison();
 }
