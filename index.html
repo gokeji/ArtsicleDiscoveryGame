@@ -132,21 +132,32 @@
             }(document));
 
             function postToFeed(image) {
-                var obj = {
-                    method: 'feed',
-                    //redirect_uri: 'http://www.artsicle.com/',
-                    link: 'http://www.artsicle.com/art/' + $(image).attr("permalink"),
-                    picture: $(image).attr("src"),
-                    name: 'Artsicle Discovery Game',
-                    caption: 'Caption, My Caption!',
-                    description: 'This is the coolest artwork like EVER!'
-                };
+                var url = 'image.php?art=' + encodeURIComponent($(image).attr("permalink"));
+                $.get(url, function(data) {
+                    try
+                    {
+                        var result = JSON.parse(data);
+                        var obj = {
+                            method: 'feed',
+                            //redirect_uri: 'http://www.artsicle.com/',
+                            link: 'http://www.artsicle.com/art/' + $(image).attr("permalink"),
+                            picture: $(image).attr("src"),
+                            name: 'Artsicle Discovery Game',
+                            caption: '"' + result['name'] + '" by ' + result['artist']['full'],
+                            description: result['description']
+                        };
 
-                function callback(response) {
-                    //alert("Post ID: " + response['post_id']);
-                }
+                        function callback(response) {
+                            //alert("Post ID: " + response['post_id']);
+                        }
 
-                FB.ui(obj, callback);
+                        FB.ui(obj, callback);
+                    }
+                    catch (error)
+                    {
+                        //alert("Invalid response!\n"+data);
+                    }
+                });
             }
 
         </script>
