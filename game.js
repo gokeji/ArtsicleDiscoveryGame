@@ -174,7 +174,7 @@ function submit_selection(comparison_id, winner, loser)
                              "given <span class='notif-emp'>"+obj['battles']+"</span> battles.</div><div class='notif-dummy'></div>",
                       "theme":"noty_theme_mitgux", "layout":"bottomRight",
                       "type":"information","animateOpen":{"height":"toggle"},
-                      "animateClose":{"height":"toggle"},"speed":500,"timeout":4000,
+                      "animateClose":{"height":"toggle"},"speed":500,"timeout":3000,
                       "closeButton":true,"closeOnSelfClick":false,
                       "closeOnSelfOver":false,"modal":false});
 	        }
