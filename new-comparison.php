@@ -1,5 +1,28 @@
 <?php
 
+require 'fb/facebook.php';
+
+$email = 0;
+
+$facebook = new Facebook(array(
+  'appId'  => '411664055513252',
+  'secret' => '7e8b0e70e147953329f73de98a9d45b6',
+));
+
+// Get User ID
+$user = $facebook->getUser();
+
+if ($user) {
+    try {
+        //Proceed knowing you have a logged in user who's authenticated.
+        $user_profile = $facebook->api('/me');
+        $email = $user_profile['email'];
+    } catch (FacebookApiException $e) {
+        error_log($e);
+        $user = 0;
+    }
+}
+
 // is cURL installed
 if (!function_exists('curl_init')){
     die('Sorry cURL is not installed!');
@@ -8,7 +31,7 @@ if (!function_exists('curl_init')){
 $api_key = "lYfF8kAmPyRZ0Wr0G_9R";
 $api_url = "http://$api_key:artsicle@www.artsicle.com/api/v1";
 
-$email = isset($_GET['email']) ? trim($_GET['email']) : '';
+//$email = isset($_GET['email']) ? trim($_GET['email']) : '';
 
 function get_user($email)
 {
@@ -109,7 +132,6 @@ if ($email && !isset($_SESSION['email'])) {
     {
         $user_id = get_user($email);
     }
-    
     $_SESSION['user'] = $user_id;
 }
 elseif (isset($_SESSION['user']))

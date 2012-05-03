@@ -93,7 +93,7 @@ function addStats($perm, $isWinner){
 			$query->bindParam(':depth', $artworkInfo['dimensions']['depth'], PDO::PARAM_INT);
 			$query->bindParam(':weight', $artworkInfo['dimensions']['weight'], PDO::PARAM_INT);
 			$query->bindParam(':medium', $artworkInfo['medium'], PDO::PARAM_STR);
-			$query->bindParam(':price', $artworkInfo['price'], PDO::PARAM_INT);
+			$query->bindParam(':price', $artworkInfo['price'], PDO::PARAM_STR);
 			$query->execute();
 		} else {
 			//update artwork in database
@@ -109,7 +109,7 @@ function addStats($perm, $isWinner){
 			$query->bindParam(':wins', $wins, PDO::PARAM_INT);
 			$query->bindParam(':winrate', $winrate, PDO::PARAM_INT);
 			$query->bindParam(':link', $perm, PDO::PARAM_STR);
-			$query->bindParam(':price', $artworks[0]['artwork_price'], PDO::PARAM_INT);
+			$query->bindParam(':price', $artworks[0]['artwork_price'], PDO::PARAM_STR);
 			$query->execute();
 		}
 		

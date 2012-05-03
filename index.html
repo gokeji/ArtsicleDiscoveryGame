@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	    <title>Artsicle Discovery Game</title>
 	    <link rel="stylesheet" type="text/css" href="./style_base.css"/>
 	    <link rel="stylesheet" type="text/css" href="./cloud-zoom/cloud-zoom.css"/>
 	    <link rel="stylesheet" type="text/css" href="./noty/css/jquery.noty.css"/>
 	    <link rel="stylesheet" type="text/css" href="./noty/css/noty_theme_mitgux.css"/>
 	</head>
-
 	<body>
-	
 		<header>
 		<div class="center" id="header">
 			<ul id="logo"><a href="#">Discovery Game</a></ul>
@@ -26,6 +24,7 @@
 	
 		<div class="center" id="page">
 			<div class="center" id="page-content">
+                <img id="loading-animation" src="./images/loading.gif" style="display:none;"/>
 				<div class="center" id="comparison-box" style="display:none;">
 					<div class="image-box">
 						<a href="" class="cloud-zoom" id="zoom1" rel="position:'left'">
@@ -50,17 +49,17 @@
 					</div>
 				</div>
 				<div class="center" id="email-box">
-
+                    <h2 id="fb-welcome-message"></h2>
 					<div id="login-buttons">
+                        <h2 id="welcome-message">Welcome to Artsicle's Discovery Game!</h2><br/>
 						<div id="fblog" class="fb-login-button" scope="email" style="display:inline-block;">Connect</div>
-						<h3 id="login-message">OR</h3>
+						<h3 id="login-message">or</h3>
 						<button id="play-button">Just play</button>
 					</div>
 					<input type="text" id="email" style="display:none;"></input>
 						<!-- <p>Would you like to register with your email?</p>
 						<input id="play-button" type="button" value="Register & Play"></input> -->
 				</div>
-				<img id="loading-animation" src="./images/loading.gif" style="display:none;"/>
 			</div>
 		</div>
 		
@@ -114,7 +113,7 @@
 					if (me.name) {
 					    //alert("hola! " + me.name + "(" + me.email + ")");
 					    $("div.fb-login-button").hide();
-					    $("#login-message").html("Welcome <b class='welcome-name'>" + me.first_name + "</b>!");
+					    $("#fb-welcome-message").html("Welcome <b class='welcome-name'>" + me.first_name + "</b>!");
 					    $("#email").val(me.email);
 					    $('#auth-loggedout').hide();
 					    $('#auth-loggedin').show();

@@ -117,8 +117,7 @@ function comp_back(data) {
 
 function new_comparison()
 {
-    var email = $('#email').val();
-    var url = email ? ('new-comparison.php?email='+encodeURIComponent(email)) : 'new-comparison.php';
+    var url = 'new-comparison.php';
     
     //$('#image1').fadeOut("fast");
     //$('#image2').fadeOut("fast");
@@ -169,12 +168,20 @@ function submit_selection(comparison_id, winner, loser)
 	                medium: result['medium']
 	            };
 	            
-	            noty({"text":"You voted for "+obj['caption']+".</br>"+obj['winrate']+"% of people agree with you,"+"given "+obj['battles']+" battle(s).","theme":"noty_theme_mitgux", "layout":"bottomRight","type":"information","animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":15000,"closeButton":true,"closeOnSelfClick":false,"closeOnSelfOver":false,"modal":false});
+	            noty({"text":"<img class='notif-image' src='"+obj['picture']+"'/>"+
+                             "<div class='notif-message'>You voted for "+obj['caption']+".</br>"+
+                             "<span class='notif-emp'>"+obj['winrate']+"%</span> of people agree with you, "+
+                             "given <span class='notif-emp'>"+obj['battles']+"</span> battles.</div><div class='notif-dummy'></div>",
+                      "theme":"noty_theme_mitgux", "layout":"bottomRight",
+                      "type":"information","animateOpen":{"height":"toggle"},
+                      "animateClose":{"height":"toggle"},"speed":500,"timeout":4000,
+                      "closeButton":true,"closeOnSelfClick":false,
+                      "closeOnSelfOver":false,"modal":false});
 	        }
 	        catch (error)
 	        {
 	            //alert("Invalid response!\n"+data);
-	            $('#choice').html(data);
+	            //$('#choice').html(data);
 	        }
     });
 }
@@ -185,11 +192,13 @@ function start_game()
     {
         game_started = true;
         $('#comparison-box').hide();
+        $('#welcome-message').hide();
+        $('#login-message').hide();
+        $('#play-button').hide();
         $("#loading-animation").show();
-	$("#play-button").hide();
-	$("#login-message").hide();
-	$("#fblog").hide();
+        //$("#play-button").hide();
+        //$("#login-message").hide();
+        //$("#fblog").hide();
     }
-    
     new_comparison();
 }

@@ -181,6 +181,23 @@ text-align:center;
 display:none;
 }
 
+img.notif-image {
+width: 80px;
+margin-left: 56px;
+}
+
+div.notif-message {
+
+}
+
+div.notif-dummy {
+clear: both;
+}
+
+span.notif-emp {
+color: #00B3BE;
+}
+
 /* ===============================================
 ===================== FOOTER =====================
 ==================================================*/
