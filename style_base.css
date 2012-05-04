@@ -88,7 +88,7 @@ background:url(./images/better.png) no-repeat;
 
 #page {
 width:auto;
-min-height:250px;
+min-height:350px;
 background:url(./images/2.png) 0 0;
 }
 
@@ -199,11 +199,11 @@ color: #00B3BE;
 }
 
 /* ===============================================
-===================== FOOTER =====================
+===================== BUTTONS ====================
 ==================================================*/
 
 #login-message {
-display:block;
+display:inline-block;
 margin:25px;
 }
 
@@ -225,6 +225,10 @@ overflow:hidden;
 text-indent:-9999px;
 border:0px;
 background:url(./images/play.png) 0 0;
+}
+
+#loading-animation {
+margin-top:50px;
 }
 
 #play-button:hover{background-position: 0 -35px;}
@@ -308,4 +312,29 @@ background-position: 0 -23px;
 width:1px;
 height:1px;
 background-position:1px 1px;
+}
+
+/* ===============================================
+===================== GALLERY ====================
+==================================================*/
+
+#selection {
+display:block;
+width:400px;
+}
+
+.gallery {
+display:inline-block;
+width:100px;
+margin:2px;
+height:100px;
+border-width:2px;
+border-style:solid;
+border-color:#000;
+}
+
+.gallery:hover{
+border-width:2px;
+border-style:dashed;
+border-color:#000;
 }

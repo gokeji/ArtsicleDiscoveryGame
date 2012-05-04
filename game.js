@@ -192,9 +192,10 @@ function start_game()
     {
         game_started = true;
         $('#comparison-box').hide();
-        $('#welcome-message').hide();
+        $('.welcome-message').hide();
         $('#login-message').hide();
         $('#play-button').hide();
+	$('#gallerybox').hide();
         $("#loading-animation").show();
         //$("#play-button").hide();
         //$("#login-message").hide();
@@ -202,3 +203,75 @@ function start_game()
     }
     new_comparison();
 }
+
+
+
+/////////////////////////////CODE FOR THE GALLERY//////////////////////////////////
+
+var images = new Object();
+
+images[0] = 'images/gallery/1.jpg';
+images[1] = 'images/gallery/2.jpg';
+images[2] = 'images/gallery/3.jpg';
+images[3] = 'images/gallery/4.jpg';
+images[4] = 'images/gallery/5.jpg';
+images[5] = 'images/gallery/6.jpg';
+
+var altText = new Object();
+
+altText[0] = 'Image 1';
+altText[1] = 'Image 2';
+altText[2] = 'Image 3';
+altText[3] = 'Image 4';
+altText[4] = 'Image 5';
+altText[5] = 'Image 6';
+
+var i = 0;
+var timer_on = "true";
+
+function change(X){
+  var y = Math.floor((Math.random()*5)+1);
+  X.src = images[y];
+  X.alt = altText[y];
+}
+
+function replaceThings(X){
+  $(X).fadeOut(350, function() {change(this);
+  });
+  $(X).fadeIn(350, function() {});
+}
+
+function repeat(){
+  replaceThings("#0");
+  replaceThings("#1");
+  replaceThings("#2");
+  t = setTimeout("repeat()", 5000);
+}
+
+function start_time(){
+  if (timer_on == "false"){
+    timer_on = "true";
+    repeat();
+  }
+}
+
+function stop_time(){
+  clearTimeout(t);
+  timer_on = "false";
+}
+
+function prepare(){
+  var t = setTimeout("repeat()", 5000);
+  $(".gallery").mouseenter(
+  function () {
+    stop_time();
+  });
+  $(".gallery").mouseleave(
+  function () {
+    t = setTimeout("start_time()", 5000);
+  });
+}
+
+$(document).ready(function () {
+  prepare();
+});
