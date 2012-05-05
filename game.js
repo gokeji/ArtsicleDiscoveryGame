@@ -226,25 +226,24 @@ altText[3] = 'Image 4';
 altText[4] = 'Image 5';
 altText[5] = 'Image 6';
 
-var i = 0;
 var timer_on = "true";
 
-function change(X){
-  var y = Math.floor((Math.random()*5)+1);
-  X.src = images[y];
-  X.alt = altText[y];
+function change(X,Y){
+  X.src = images[Y];
+  X.alt = altText[Y];
 }
 
-function replaceThings(X){
-  $(X).fadeOut(350, function() {change(this);
+function replaceThings(X,Y){
+  $(X).fadeOut(350, function() {change(this,Y);
   });
   $(X).fadeIn(350, function() {});
 }
 
 function repeat(){
-  replaceThings("#0");
-  replaceThings("#1");
-  replaceThings("#2");
+  var Y = Math.floor((Math.random()*4)+1);
+  replaceThings("#0", Y);
+  replaceThings("#1", Y+1);
+  replaceThings("#2", Y-1);
   t = setTimeout("repeat()", 5000);
 }
 
