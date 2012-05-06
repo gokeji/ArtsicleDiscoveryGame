@@ -208,8 +208,10 @@ function start_game()
 
 /////////////////////////////CODE FOR THE GALLERY//////////////////////////////////
 
-var images = new Object();
+var images = new Array();
+var altText = new Array();
 
+/*
 images[0] = 'images/gallery/1.jpg';
 images[1] = 'images/gallery/2.jpg';
 images[2] = 'images/gallery/3.jpg';
@@ -217,16 +219,16 @@ images[3] = 'images/gallery/4.jpg';
 images[4] = 'images/gallery/5.jpg';
 images[5] = 'images/gallery/6.jpg';
 
-var altText = new Object();
-
 altText[0] = 'Image 1';
 altText[1] = 'Image 2';
 altText[2] = 'Image 3';
 altText[3] = 'Image 4';
 altText[4] = 'Image 5';
-altText[5] = 'Image 6';
+altText[5] = 'Image 6';*/
 
 var timer_on = "true";
+var t = 0;
+var Y = 0;
 
 function change(X,Y){
   X.src = images[Y];
@@ -240,11 +242,12 @@ function replaceThings(X,Y){
 }
 
 function repeat(){
-  var Y = Math.floor((Math.random()*4)+1);
-  replaceThings("#0", Y);
-  replaceThings("#1", Y+1);
-  replaceThings("#2", Y-1);
-  t = setTimeout("repeat()", 5000);
+  replaceThings("#0", Y); Y = (Y+1) % images.length;
+  replaceThings("#1", Y); Y = (Y+1) % images.length;
+  replaceThings("#2", Y); Y = (Y+1) % images.length;
+  if(timer_on){
+  	t = setTimeout("repeat()", 5000);
+  }
 }
 
 function start_time(){
@@ -260,7 +263,7 @@ function stop_time(){
 }
 
 function prepare(){
-  var t = setTimeout("repeat()", 5000);
+  //t = setTimeout("repeat()", 5000);
   $(".gallery").mouseenter(
   function () {
     stop_time();
@@ -271,6 +274,30 @@ function prepare(){
   });
 }
 
+function loadImages(){
+	var url = 'gallery.php';
+    $.get(url, function(data) {
+        try
+        {
+            var result = JSON.parse(data);
+            console.log(result);
+            for (i in result.popular){
+            	//console.log(result.popular[i].image);
+            	images[i] = result.popular[i].image;
+            	altText[i] = result.popular[i].name;
+            }
+            repeat();
+        }
+        catch (error)
+        {
+            //$('#choice').html(data);
+        }
+    });
+}
+
+
 $(document).ready(function () {
-  prepare();
+	loadImages();
+  	prepare();
+  
 });
