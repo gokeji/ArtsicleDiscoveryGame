@@ -6,8 +6,8 @@ handlers_registered = 0;
 
 submit_lock = 0;
 
-pre_loaded = false;
-next_load = 0;
+waiting_next = true;
+next_comparison = 0;
 
 game_started = false;
 
@@ -43,53 +43,57 @@ function register_handlers()
 	});
 }
 
-function comp_back(data) {
+function setup_comparison(comparison) 
+{
+    $("#loading-animation").hide();
+        
+    $('#comparison-box').fadeIn("fast");
+    $('#better').fadeIn("fast");
+    $('#image1').attr("src", comparison['art1']['image']);//.fadeIn("fast");
+    $('#zoom1').attr("href", comparison['art1']['image']);// loads the image for magnification
+    $('#image1').attr("permalink", comparison['art1']['permalink']);
+    $('#like-image1').attr("src", like_url_template.replace("{{IMAGE-URL}}", comparison['art1']['image']));
+    $('#image2').attr("src", comparison['art2']['image']);//.fadeIn("fast");
+    $('#zoom2').attr("href", comparison['art2']['image']);// loads the image for magnification
+    $('#image2').attr("permalink", comparison['art2']['permalink']);
+    $('#like-image2').attr("src", like_url_template.replace("{{IMAGE-URL}}", comparison['art2']['image']));
+    $('#game-box').css("display", "block");
+    
+    $('#comparison-box').css("opacity", "1");
+    
+    comparison_id = comparison['id'];
+    image1_perm = comparison['art1']['permalink'];
+    image2_perm = comparison['art2']['permalink'];
+    
+    // activate cloud-zoom
+    $('.cloud-zoom').CloudZoom();
+}
+
+function comp_back(data) 
+{
     //$('.result').html(data);
     //alert(data);        
     
-    if (pre_loaded == false)
+    if (waiting_next)
     {
-        next_load = JSON.parse(data);
-        //preload_images(next_load['art1']['image'], next_load['art2']['image']);
-        pre_loaded = true;
-        new_comparison();
-    }
-    else
-    {
-        var first_load = next_load;
-        next_load = JSON.parse(data);
+        waiting_next = false;
+        try {
+            comparison = JSON.parse(data);
+          
+        } catch (err) {
+            //invalid response from server?
+            waiting_next = true;
+            setTimeout(new_comparison, 500);
+        }
+        setup_comparison(comparison);
+        submit_lock = 0;
         
-        $("#loading-animation").hide();
-        
-        $('#comparison-box').fadeIn("fast");
-        $('#better').fadeIn("fast");
-        $('#image1').attr("src", first_load['art1']['image']);//.fadeIn("fast");
-		$('#zoom1').attr("href", first_load['art1']['image']);// loads the image for magnification
-        $('#image1').attr("permalink", first_load['art1']['permalink']);
-        $('#like-image1').attr("src", like_url_template.replace("{{IMAGE-URL}}", first_load['art1']['image']));
-        $('#image2').attr("src", first_load['art2']['image']);//.fadeIn("fast");
-		$('#zoom2').attr("href", first_load['art2']['image']);// loads the image for magnification
-        $('#image2').attr("permalink", first_load['art2']['permalink']);
-        $('#like-image2').attr("src", like_url_template.replace("{{IMAGE-URL}}", first_load['art2']['image']));
-        $('#game-box').css("display", "block");
-        
-        $('#comparison-box').css("opacity", "1");
-        
-        comparison_id = first_load['id'];
-        image1_perm = first_load['art1']['permalink'];
-        image2_perm = first_load['art2']['permalink'];
-        
-        preload_images(next_load['art1']['image'], next_load['art2']['image']);
-        
-		// activate cloud-zoom
-		$('.cloud-zoom').CloudZoom();
         if (!handlers_registered)
         {
             $('#zoom1').click(function(e) {
 				e.preventDefault();
                 if (!submit_lock)
                 {
-                    submit_lock = 1;
                     submit_selection(comparison_id, image1_perm, image2_perm);
                 }
             });
@@ -97,37 +101,55 @@ function comp_back(data) {
 				e.preventDefault();
                 if (!submit_lock)
                 {
-                    submit_lock = 1;
                     submit_selection(comparison_id, image2_perm, image1_perm);
                 }
             });
             $('#neither-button').click(function() {
                 if (!submit_lock)
                 {
-                    submit_lock = 1;
-                    new_comparison();
+                    //new_comparison();
+                    submit_selection(comparison_id, false, false);
                 }
             });
             handlers_registered = 1;
         }
     }
-    submit_lock = 0;
+    else
+    {
+        next_comparison = JSON.parse(data);
+        preload_images(next_comparison['art1']['image'], next_comparison['art2']['image']);
+    }
     $('#comparison-box').css("opacity", "1");
 }
 
 function new_comparison()
 {
     var url = 'new-comparison.php';
-    
-    //$('#image1').fadeOut("fast");
-    //$('#image2').fadeOut("fast");
-    $('#comparison-box').css("opacity", "0.5");
     $.get(url, comp_back);
 }
 
 function submit_selection(comparison_id, winner, loser)
 {
+    if (next_comparison) 
+    {
+        setup_comparison(next_comparison);
+        next_comparison = 0;
+        waiting_next = false;
+    }
+    else
+    {
+        submit_lock = 1;
+        waiting_next = true;
+        $('#comparison-box').css("opacity", "0.5");
+        new_comparison();
+    }
     new_comparison();
+    
+    if (!winner) { 
+        // "Neither" case. Nothing to submit.
+        return;
+    }
+    
     var url = 'submit.php?comp_id=' + comparison_id + (winner ? '&winner='+winner : '');
     $.get(url, function(data) {
         try
@@ -144,6 +166,20 @@ function submit_selection(comparison_id, winner, loser)
             if (result['response'].match(/success/i))
             {
                 //alert("Successful comparison!");
+            }
+            if (result['saved-to'] == 'session' && $("#fb-welcome-message").html() != "") 
+            {
+                $("div.fb-login-button").show();
+                $("#fb-welcome-message").html("");
+                noty({"text":"Login with Facebook to save your choices!",
+                      "theme":"noty_theme_mitgux","layout":"topRight","type":"information",
+                      "animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},
+                      "speed":500,"timeout":5000,"closeButton":true,"closeOnSelfClick":true,
+                      "closeOnSelfOver":false,"modal":false});
+            } else if (!result['saved-to'] && $("#fb-welcome-message").html() == "")
+            {
+                $("div.fb-login-button").hide();
+                $("#fb-welcome-message").html("Welcome <b class='welcome-name'>" + me.first_name + "</b>!");
             }
         }
         catch (error)
@@ -169,7 +205,7 @@ function submit_selection(comparison_id, winner, loser)
 	            };
 	            
 	            noty({"text":"<img class='notif-image' src='"+obj['picture']+"'/>"+
-                             "<div class='notif-message'>You voted for "+obj['caption']+".</br>"+
+                             "<div class='notif-message'>You voted for "+obj['caption']+". "+
                              "<span class='notif-emp'>"+obj['winrate']+"%</span> of people agree with you, "+
                              "given <span class='notif-emp'>"+obj['battles']+"</span> battles.</div><div class='notif-dummy'></div>",
                       "theme":"noty_theme_mitgux", "layout":"bottomRight",
@@ -195,16 +231,16 @@ function start_game()
         $('.welcome-message').hide();
         $('#login-message').hide();
         $('#play-button').hide();
-	$('#gallerybox').hide();
+        $('#gallerybox').hide();
+        stop_time(); //stop loading the gallery
         $("#loading-animation").show();
         //$("#play-button").hide();
         //$("#login-message").hide();
         //$("#fblog").hide();
     }
     new_comparison();
+    new_comparison();
 }
-
-
 
 /////////////////////////////CODE FOR THE GALLERY//////////////////////////////////
 
@@ -245,6 +281,9 @@ function replaceThings(X,Y){
 }
 
 function repeat(){
+  if (timer_on == "false")
+    return;
+    
   replaceThings("#0", Y); Y = (Y+1) % images.length;
   replaceThings("#1", Y); Y = (Y+1) % images.length;
   replaceThings("#2", Y); Y = (Y+1) % images.length;
@@ -261,7 +300,9 @@ function start_time(){
 }
 
 function stop_time(){
-  clearTimeout(t);
+  if (!typeof t === 'undefined') {
+    clearTimeout(t);
+  }
   timer_on = "false";
 }
 
@@ -298,9 +339,7 @@ function loadImages(){
     });
 }
 
-
 $(document).ready(function () {
 	loadImages();
   	prepare();
-  
 });

@@ -4,22 +4,24 @@ require 'fb/facebook.php';
 
 $email = 0;
 
+session_start();
+
 $facebook = new Facebook(array(
   'appId'  => '411664055513252',
   'secret' => '7e8b0e70e147953329f73de98a9d45b6',
 ));
 
 // Get User ID
-$user = $facebook->getUser();
+$fb_user = $facebook->getUser();
 
-if ($user) {
+if ($fb_user) {
     try {
         //Proceed knowing you have a logged in user who's authenticated.
         $user_profile = $facebook->api('/me');
         $email = $user_profile['email'];
     } catch (FacebookApiException $e) {
         error_log($e);
-        $user = 0;
+        $fb_user = 0;
     }
 }
 
@@ -124,8 +126,6 @@ function new_user($email)
 
 $user_id = "";
 
-session_start();
-
 if ($email && !isset($_SESSION['email'])) {
 	$user_id = new_user($email);
     if(!$user_id)
@@ -133,8 +133,9 @@ if ($email && !isset($_SESSION['email'])) {
         $user_id = get_user($email);
     }
     $_SESSION['user'] = $user_id;
+    $_SESSION['fb_login'] = true;
 }
-elseif (isset($_SESSION['user']))
+elseif ($email || (isset($_SESSION['user']) && !isset($_SESSION['fb_login'])))
 {
     $user_id = $_SESSION['user'];
 }
@@ -142,6 +143,18 @@ else
 {
     $user_id = new_user();
     $_SESSION['user'] = $user_id;
+    if (isset($_SESSION['fb_login']))
+    {
+       unset($_SESSION['fb_login']);
+    }
+    if (isset($_SESSION['email']))
+    {
+       unset($_SESSION['email']);
+    }
+    if (isset($_SESSION['picks']))
+    {
+       unset($_SESSION['picks']);
+    }
 }
 
 //echo "User id: ".$user_id;
