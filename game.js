@@ -210,6 +210,7 @@ function start_game()
 
 var images = new Array();
 var altText = new Array();
+var permalink = new Array();
 
 /*
 images[0] = 'images/gallery/1.jpg';
@@ -229,14 +230,16 @@ altText[5] = 'Image 6';*/
 var timer_on = "true";
 var t = 0;
 var Y = 0;
+var artsicle_url = 'http://www.artsicle.com/art/';
 
 function change(X,Y){
-  X.src = images[Y];
-  X.alt = altText[Y];
+  $(X).attr('src' , images[Y]);
+  $(X).attr('alt' , altText[Y]);
+  $(X).attr('onClick' , 'window.open("'+permalink[Y]+'")');
 }
 
 function replaceThings(X,Y){
-  $(X).fadeOut(350, function() {change(this,Y);
+  $(X).fadeOut(350, function() {change(X,Y);
   });
   $(X).fadeIn(350, function() {});
 }
@@ -282,9 +285,9 @@ function loadImages(){
             var result = JSON.parse(data);
             console.log(result);
             for (i in result.popular){
-            	//console.log(result.popular[i].image);
             	images[i] = result.popular[i].image;
             	altText[i] = result.popular[i].name;
+            	permalink[i] = artsicle_url + result.popular[i].permalink;
             }
             repeat();
         }
