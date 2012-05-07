@@ -287,7 +287,7 @@ function repeat(){
   replaceThings("#0", Y); Y = (Y+1) % images.length;
   replaceThings("#1", Y); Y = (Y+1) % images.length;
   replaceThings("#2", Y); Y = (Y+1) % images.length;
-  if(timer_on){
+  if(timer_on == "true"){
   	t = setTimeout("repeat()", 5000);
   }
 }
